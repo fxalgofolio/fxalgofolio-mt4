@@ -1,3 +1,5 @@
+#ifndef FXALGOFOLIO_UTIL_BASE
+#define FXALGOFOLIO_UTIL_BASE
 
 input string SystemSymbol = "EURUSD";
 input ENUM_TIMEFRAMES SystemPeriod = PERIOD_H1;
@@ -33,3 +35,5 @@ void OnTick()
       OnSystemBar();
    }
 }
+
+#endif // FXALGOFOLIO_UTIL_BASE
