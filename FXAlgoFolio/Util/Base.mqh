@@ -36,4 +36,4 @@ void OnTick()
    }
 }
 
-#endif // FXALGOFOLIO_UTIL_BASE
+#endif
