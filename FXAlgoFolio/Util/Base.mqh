@@ -1,6 +1,9 @@
 #ifndef FXALGOFOLIO_UTIL_BASE
 #define FXALGOFOLIO_UTIL_BASE
 
+#include "Util/Lock.mqh"
+#include "Util/Order.mqh"
+
 input string SystemSymbol = "EURUSD";
 input ENUM_TIMEFRAMES SystemPeriod = PERIOD_H1;
 sinput int OrderMagic = 1010101;
