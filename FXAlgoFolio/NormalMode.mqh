@@ -5,7 +5,8 @@
 
 void OnSystemBar()
 {
-   // TODO
+   SystemEntry();
+   SystemExit();
 }
 
 #endif
