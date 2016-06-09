@@ -1,11 +1,13 @@
 #ifndef FXALGOFOLIO_TESTMODE
 #define FXALGOFOLIO_TESTMODE
 
+#define FXALGOFOLIO_INIT_EXTRA TestInit
+
 #include "Util/Base.mqh"
 #include "Util/Test.mqh"
 
-input TestType SystemTest;
-input int TestIteration = 1000;
+sinput TestType SystemTest;
+input int TestIteration = 1;
 
 enum TestType
 {
@@ -14,8 +16,15 @@ enum TestType
    Entry_FixedBarExit, // Entry - fixed-bar exit
    Entry_FixedLevelExit, // Entry - fixed-level (SL & TP) exit
    Exit_RandomEntry, // Exit - random entry
-   Exit_SimilarEntry, // Exit - similar entry
+   Exit_TrendFollowingEntry, // Exit - trend-following entry
+   Exit_CounterTrendEntry, // Exit - counter-trend entry
 };
+
+void TestInit()
+{
+   // Ensure each test run is a different distribution of random numbers.
+   MathSrand(GetTickCount() + (100 * TestIteration));
+}
 
 void OnSystemBar()
 {
@@ -32,30 +41,38 @@ void OnSystemBar()
       TestRandomEntry();
       break;
 
-   case Exit_SimilarEntry:
-      TestSimilarEntry();
+   case Exit_TrendFollowingEntry:
+      TestTrendFollowingEntry();
+      break;
+
+   case Exit_CounterTrendEntry:
+      TestCounterTrendEntry();
       break;
    }
 
-   switch (SystemTest)
+   if (SelectOpenOrder())
    {
-   case System:
-   case Exit_RandomEntry:
-   case Exit_SimilarEntry:
-      SystemExit();
-      break;
+      switch (SystemTest)
+      {
+      case System:
+      case Exit_RandomEntry:
+      case Exit_TrendFollowingEntry:
+      case Exit_CounterTrendEntry:
+         SystemExit();
+         break;
 
-   case Entry_RandomExit:
-      TestRandomExit();
-      break;
+      case Entry_RandomExit:
+         TestRandomExit();
+         break;
 
-   case Entry_FixedBarExit:
-      TestFixedBarExit();
-      break;
+      case Entry_FixedBarExit:
+         TestFixedBarExit();
+         break;
 
-   case Entry_FixedLevelExit:
-      TestFixedLevelExit();
-      break;
+      case Entry_FixedLevelExit:
+         TestFixedLevelExit();
+         break;
+      }
    }
 }
 

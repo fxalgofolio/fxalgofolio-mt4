@@ -4,9 +4,8 @@
 #include "Util/Lock.mqh"
 #include "Util/Order.mqh"
 
-input string SystemSymbol = "EURUSD";
-input ENUM_TIMEFRAMES SystemPeriod = PERIOD_H1;
-sinput int OrderMagic = 1010101;
+sinput string SystemSymbol = "EURUSD";
+sinput ENUM_TIMEFRAMES SystemPeriod = PERIOD_H1;
 
 int OnInit()
 {
@@ -15,6 +14,15 @@ int OnInit()
       Print("Failed to select the specified symbol: ", SystemSymbol);
       return INIT_FAILED;
    }
+
+   // Set up for MT4.
+#ifdef FXALGOFOLIO_INIT_EXTRA
+   FXALGOFOLIO_INIT_EXTRA();
+#else
+   MathSrand(GetTickCount());
+#endif
+
+   // TODO Detect pip size.
 
    return INIT_SUCCEEDED;
 }
