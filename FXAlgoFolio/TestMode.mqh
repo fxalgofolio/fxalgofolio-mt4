@@ -11,13 +11,13 @@ input int TestIteration = 1;
 
 enum TestType
 {
-   System, // Baseline system
-   Entry_RandomExit, // Entry - random exit
-   Entry_FixedBarExit, // Entry - fixed-bar exit
-   Entry_FixedLevelExit, // Entry - fixed-level (SL & TP) exit
-   Exit_RandomEntry, // Exit - random entry
-   Exit_TrendFollowingEntry, // Exit - trend-following entry
-   Exit_CounterTrendEntry, // Exit - counter-trend entry
+   Test_System, // Baseline system
+   Test_Entry_RandomExit, // Entry - random exit
+   Test_Entry_FixedBarExit, // Entry - fixed-bar exit
+   Test_Entry_FixedLevelExit, // Entry - fixed-level (SL & TP) exit
+   Test_Exit_RandomEntry, // Exit - random entry
+   Test_Exit_TrendFollowingEntry, // Exit - trend-following entry
+   Test_Exit_CounterTrendEntry, // Exit - counter-trend entry
 };
 
 void TestInit()
@@ -26,54 +26,50 @@ void TestInit()
    MathSrand(GetTickCount() + (100 * TestIteration));
 }
 
-void OnSystemBar()
+bool DoSystemEntry()
 {
    switch (SystemTest)
    {
-   case System:
-   case Entry_RandomExit:
-   case Entry_FixedBarExit:
-   case Entry_FixedLevelExit:
-      SystemEntry();
-      break;
+   case Test_System:
+   case Test_Entry_RandomExit:
+   case Test_Entry_FixedBarExit:
+   case Test_Entry_FixedLevelExit:
+      return SystemEntry();
 
-   case Exit_RandomEntry:
-      TestRandomEntry();
-      break;
+   case Test_Exit_RandomEntry:
+      return TestRandomEntry();
 
-   case Exit_TrendFollowingEntry:
-      TestTrendFollowingEntry();
-      break;
+   case Test_Exit_TrendFollowingEntry:
+      return TestTrendFollowingEntry();
 
-   case Exit_CounterTrendEntry:
-      TestCounterTrendEntry();
-      break;
+   case Test_Exit_CounterTrendEntry:
+      return TestCounterTrendEntry();
    }
 
-   if (SelectOpenOrder())
+   return false;
+}
+
+bool DoSystemExit()
+{
+   switch (SystemTest)
    {
-      switch (SystemTest)
-      {
-      case System:
-      case Exit_RandomEntry:
-      case Exit_TrendFollowingEntry:
-      case Exit_CounterTrendEntry:
-         SystemExit();
-         break;
+   case Test_System:
+   case Test_Exit_RandomEntry:
+   case Test_Exit_TrendFollowingEntry:
+   case Test_Exit_CounterTrendEntry:
+      return SystemExit();
 
-      case Entry_RandomExit:
-         TestRandomExit();
-         break;
+   case Test_Entry_RandomExit:
+      return TestRandomExit();
 
-      case Entry_FixedBarExit:
-         TestFixedBarExit();
-         break;
+   case Test_Entry_FixedBarExit:
+      return TestFixedBarExit();
 
-      case Entry_FixedLevelExit:
-         TestFixedLevelExit();
-         break;
-      }
+   case Test_Entry_FixedLevelExit:
+      return TestFixedLevelExit();
    }
+
+   return false;
 }
 
 #endif

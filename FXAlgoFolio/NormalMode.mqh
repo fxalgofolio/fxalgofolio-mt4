@@ -3,10 +3,14 @@
 
 #include "Util/Base.mqh"
 
-void OnSystemBar()
+bool DoSystemEntry()
 {
-   SystemEntry();
-   SystemExit();
+   return SystemEntry();
+}
+
+bool DoSystemExit()
+{
+   return SystemExit();
 }
 
 #endif

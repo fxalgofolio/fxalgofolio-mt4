@@ -7,6 +7,9 @@
 sinput string SystemSymbol = "EURUSD";
 sinput ENUM_TIMEFRAMES SystemPeriod = PERIOD_H1;
 
+int SystemPipSize;
+double SystemPipValue;
+
 int OnInit()
 {
    if (!SymbolSelect(SystemSymbol, true))
@@ -21,14 +24,24 @@ int OnInit()
 #else
    MathSrand(GetTickCount());
 #endif
+   LockInit();
 
-   // TODO Detect pip size.
+   // Detect pip size.
+   int digits = Digits();
+   SystemPipSize = (digits == 3 || digits == 5) ? 10 : 1;
+   Print("Pip size is ", SystemPipSize, " points.");
+   SystemPipValue = Point() * SystemPipSize;
 
    return INIT_SUCCEEDED;
 }
 
 void OnTick()
 {
+   if (!IsConnected() || IsStopped() || !IsTradeAllowed())
+   {
+      return;
+   }
+
    // Set up system bar.
    static datetime lastBar;
    datetime newBar = iTime(SystemSymbol, SystemPeriod, 0);
@@ -38,14 +51,39 @@ void OnTick()
    }
 
    // Run system.
-   if (lastBar != newBar)
+   if (lastBar != newBar && LockAcquire())
    {
-      // TODO Acquire trading lock.
+      bool error = false;
 
-      // Run bar.
-      lastBar = newBar;
-      OnSystemBar();
+      if (!SelectOpenOrder() && !DoSystemEntry())
+      {
+         error = true;
+         Alert("Failed to enter trade.");
+      }
+
+      if (SelectOpenOrder() && !DoSystemExit())
+      {
+         error = true;
+         Alert("Failed to exit trade.");
+      }
+
+      if (!error)
+      {
+         lastBar = newBar;
+      }
+
+      LockRelease();
    }
+}
+
+double Random(double max)
+{
+   return max * MathRand() / 32768;
+}
+
+double Random()
+{
+   return Random(1);
 }
 
 #endif
