@@ -3,8 +3,8 @@
 
 #define DEFAULT_START_DATE D'2009.01.01 00:00'
 
-#include "Util/Lock.mqh"
-#include "Util/Order.mqh"
+#include "Lock.mqh"
+#include "Order.mqh"
 
 sinput string SystemSymbol = "EURUSD";
 sinput ENUM_TIMEFRAMES SystemPeriod = PERIOD_H1;

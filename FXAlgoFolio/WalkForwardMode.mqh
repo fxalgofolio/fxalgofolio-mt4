@@ -62,6 +62,8 @@ bool DoSystemEntry()
    {
       return SystemEntry();
    }
+
+   return true;
 }
 
 bool DoSystemExit()

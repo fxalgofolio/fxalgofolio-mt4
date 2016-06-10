@@ -6,10 +6,6 @@
 #include "Util/Base.mqh"
 #include "Util/Test.mqh"
 
-sinput TestType SystemTest;
-sinput bool TestSetExterns = true;
-input int TestIteration = 1;
-
 enum TestType
 {
    Test_System, // Baseline system
@@ -20,6 +16,10 @@ enum TestType
    Test_Exit_TrendFollowingEntry, // Exit - trend-following entry
    Test_Exit_CounterTrendEntry, // Exit - counter-trend entry
 };
+
+sinput TestType SystemTest;
+sinput bool TestSetExterns = true;
+input int TestIteration = 1;
 
 void TestInit()
 {
