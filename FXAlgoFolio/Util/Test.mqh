@@ -1,7 +1,7 @@
 #ifndef FXALGOFOLIO_UTIL_TEST
 #define FXALGOFOLIO_UTIL_TEST
 
-sinput datetime TestStartDate;
+sinput datetime TestStartDate = DEFAULT_START_DATE;
 sinput double TestOrderLots = 1.0;
 sinput double TestTradeProbability = 0.5;
 sinput double TestTradePercentLong = 0.5;

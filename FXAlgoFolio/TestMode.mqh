@@ -7,6 +7,7 @@
 #include "Util/Test.mqh"
 
 sinput TestType SystemTest;
+sinput bool TestSetExterns = true;
 input int TestIteration = 1;
 
 enum TestType
@@ -24,6 +25,14 @@ void TestInit()
 {
    // Ensure each test run is a different distribution of random numbers.
    MathSrand(GetTickCount() + (100 * TestIteration));
+}
+
+void DoSystemSetExterns()
+{
+   if (TestSetExterns)
+   {
+      SystemSetExterns();
+   }
 }
 
 bool DoSystemEntry()

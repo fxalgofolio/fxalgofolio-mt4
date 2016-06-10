@@ -3,6 +3,11 @@
 
 #include "Util/Base.mqh"
 
+void DoSystemSetExterns()
+{
+   SystemSetExterns();
+}
+
 bool DoSystemEntry()
 {
    return SystemEntry();

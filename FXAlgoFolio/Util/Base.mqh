@@ -1,6 +1,8 @@
 #ifndef FXALGOFOLIO_UTIL_BASE
 #define FXALGOFOLIO_UTIL_BASE
 
+#define DEFAULT_START_DATE D'2009.01.01 00:00'
+
 #include "Util/Lock.mqh"
 #include "Util/Order.mqh"
 
@@ -53,6 +55,9 @@ void OnTick()
    // Run system.
    if (lastBar != newBar && LockAcquire())
    {
+      // Update dynamic parameters.
+      DoSystemSetExterns();
+
       bool error = false;
 
       if (!SelectOpenOrder() && !DoSystemEntry())
