@@ -91,13 +91,12 @@ bool TestTrendFollowingEntry()
 bool TestCounterTrendEntry()
 {
    double rsi = iRSI(SystemSymbol, SystemPeriod, TEST_RSI_PERIOD, PRICE_CLOSE, 1);
-   double rsiPrev = iRSI(SystemSymbol, SystemPeriod, TEST_RSI_PERIOD, PRICE_CLOSE, 2);
 
-   if (rsiPrev >= 80 && rsi < rsiPrev)
+   if (rsi >= 70)
    {
       return OrderMarketOpen(TestOrderLots, false, 0, 0, "Test reversal entry");
    }
-   else if (rsiPrev <= 20 && rsi > rsiPrev)
+   else if (rsi <= 30)
    {
       return OrderMarketOpen(TestOrderLots, true, 0, 0, "Test reversal entry");
    }
