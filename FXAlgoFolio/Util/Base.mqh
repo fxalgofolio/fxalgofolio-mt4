@@ -16,10 +16,10 @@ double SystemPipValue;
 
 int OnInit()
 {
-   if (!SymbolSelect(SystemSymbol, true))
+   if (Symbol() != SystemSymbol)
    {
-      Print("Failed to select the specified symbol: ", SystemSymbol);
-      return INIT_FAILED;
+      Print("Unusable symbol used.");
+      return INIT_AGENT_NOT_SUITABLE;
    }
 
    // Set up for MT4.
