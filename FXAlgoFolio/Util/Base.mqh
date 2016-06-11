@@ -3,6 +3,8 @@
 
 #define DEFAULT_START_DATE D'2009.01.01 00:00'
 
+#property strict
+
 #include "Lock.mqh"
 #include "Order.mqh"
 
