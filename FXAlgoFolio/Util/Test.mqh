@@ -73,14 +73,14 @@ bool TestRandomEntry()
 
 bool TestTrendFollowingEntry()
 {
-   double high = iHighest(SystemSymbol, SystemPeriod, MODE_HIGH, TEST_BREAKOUT_PERIOD, 2);
-   double low = iLowest(SystemSymbol, SystemPeriod, MODE_LOW, TEST_BREAKOUT_PERIOD, 2);
+   int highestBar = iHighest(SystemSymbol, SystemPeriod, MODE_HIGH, TEST_BREAKOUT_PERIOD, 2);
+   int lowestBar = iLowest(SystemSymbol, SystemPeriod, MODE_LOW, TEST_BREAKOUT_PERIOD, 2);
 
-   if (iHigh(SystemSymbol, SystemPeriod, 1) >= high)
+   if (iHigh(SystemSymbol, SystemPeriod, 1) >= High[highestBar])
    {
       return OrderMarketOpen(TestOrderLots, true, 0, 0, "Test breakout entry");
    }
-   else if (iLow(SystemSymbol, SystemPeriod, 1) <= low)
+   else if (iLow(SystemSymbol, SystemPeriod, 1) <= Low[lowestBar])
    {
       return OrderMarketOpen(TestOrderLots, false, 0, 0, "Test breakout entry");
    }
