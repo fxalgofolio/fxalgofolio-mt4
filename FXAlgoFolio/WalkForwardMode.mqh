@@ -26,6 +26,9 @@ void WalkForwardInit()
    // Set up test interval.
    int unitInterval = 86400;
 
+   MqlDateTime startStruct;
+   int year, month, day;
+
    switch (WalkForwardPeriod)
    {
       case Period_Week:
@@ -36,11 +39,10 @@ void WalkForwardInit()
          break;
 
       case Period_Month:
-         MqlDateTime startStruct;
          TimeToStruct(WalkForwardStart, startStruct);
-         int year = startStruct.year;
-         int month = startStruct.mon;
-         int day = startStruct.day;
+         year = startStruct.year;
+         month = startStruct.mon;
+         day = startStruct.day;
 
          month += WalkForwardPeriodOffset * WalkForwardPeriodOut;
          year += (month - 1) / 12;
