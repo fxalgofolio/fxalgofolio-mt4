@@ -1,7 +1,7 @@
 
 #include <FXAlgoFolio/TestMode.mqh>
-#include "ExampleEntry.mqh"
-#include "ExampleExit.mqh"
+#include "Entry/ExampleEntry.mqh"
+#include "Exit/ExampleExit.mqh"
 
 void SystemSetExterns()
 {
